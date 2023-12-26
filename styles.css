@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: black;  /* Cor de fundo alterada para preto */
+    color: white;  /* Texto alterado para branco para melhor contraste */
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center; /* Centraliza o texto */
+    margin-top: 50px;   /* Espaçamento superior para separar do topo */
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+select, 
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #333;  /* Cor de fundo mais escura para contraste */
+    color: white;  /* Texto alterado para branco */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividade para telas com largura máxima de 600px */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        max-width: 100%;  /* Tornando o corpo responsivo à largura da tela */
+    }
+
+    select, 
+    input[type="text"],
+    button {
+        font-size: 14px;  /* Reduzindo o tamanho da fonte para melhor visualização em telas menores */
+    }
+}

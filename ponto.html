@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Ponto</title>
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h2>Controle de Ponto</h2>
+
+<!-- Botão para preencher a data -->
+<button onclick="preencherDataAutomaticamente()">Preencher Data Atual</button>
+<input type="text" id="data">
+
+<label for="hora_registro">Hora Registro:</label>
+<input type="text" id="hora_registro" readonly>
+
+<button onclick="preencherHora('entrada')">Registrar Entrada</button>
+<input type="text" id="entrada">
+
+<button onclick="preencherHora('intervalo')">Início Intervalo</button>
+<input type="text" id="intervalo">
+
+<button onclick="preencherHora('retorno')">Retorno de Intervalo</button>
+<input type="text" id="retorno">
+
+<button onclick="preencherHora('final')">Finalizar Expediente</button>
+<input type="text" id="final">
+
+<button onclick="preencherHoraERegistrarPonto()">Registrar Ponto</button>
+
+<button onclick="window.location.href='index.html'" style="margin-top: 20px;">Voltar para Home</button>
+<script>
+    const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/unhtvs3ldq0jr';
+
+    function preencherDataAutomaticamente() {
+        const dataAtual = new Date();
+        const dataFormatada = dataAtual.toISOString().split('T')[0];
+        document.getElementById('data').value = dataFormatada;
+    }
+
+    function obterProximoIdNumerico() {
+        return fetch(`${SHEETDB_API_URL}?sort_by=ID&sort_order=desc&limit=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    return parseInt(data[0].ID) + 1;
+                } else {
+                    return 1; // Se não houver registros, começa com o ID 1
+                }
+            });
+    }
+
+    async function preencherHoraERegistrarPonto() {
+        const proximoId = await obterProximoIdNumerico();
+        const horaAtual = new Date().toLocaleTimeString();
+        document.getElementById('hora_registro').value = horaAtual;
+
+        const registro = {
+            "ID": proximoId.toString(),
+            "Data": document.getElementById('data').value,
+            "Hora Registro": horaAtual,
+            "Entrada": document.getElementById('entrada').value,
+            "Início Intervalo": document.getElementById('intervalo').value,
+            "Retorno de Intervalo": document.getElementById('retorno').value,
+            "Finalizar Expediente": document.getElementById('final').value
+        };
+
+        fetch(SHEETDB_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(registro)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Registro de ponto enviado com sucesso!");
+        })
+        .catch(error => {
+            alert("Erro ao registrar o ponto. Por favor, tente novamente.");
+            console.error(error);
+        });
+    }
+
+    function consultarPorId() {
+        const idConsulta = prompt("Digite o ID numérico para consulta:");
+        if (!idConsulta) return;
+    
+        fetch(`${SHEETDB_API_URL}/ID/${idConsulta}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(`Erro na resposta da API: ${response.statusText}. Detalhes: ${text}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.length > 0) {
+                alert(`Último registro com ID ${idConsulta}:\n${JSON.stringify(data[0], null, 2)}`);
+            } else {
+                alert("Nenhum registro encontrado para o ID fornecido.");
+            }
+        })
+        .catch(error => {
+            alert(`Erro ao consultar a planilha: ${error.message}. Por favor, tente novamente.`);
+            console.error(error);
+        });
+    }
+
+    function preencherHora(campoId) {
+        const horaAtual = new Date().toLocaleTimeString();
+        document.getElementById(campoId).value = horaAtual;
+    }
+
+</script>
+
+</body>
+</html>

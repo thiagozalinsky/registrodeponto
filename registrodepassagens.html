@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Passagens</title>
+    <!-- Link para o arquivo CSS na raiz -->
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+
+<h2>Registro de Passagens</h2>
+
+<label for="transporte">Selecione o transporte:</label>
+<select id="transporte">
+    <option value="linha">Selecione uma linha</option>
+    <option value="343">343</option>
+    <option value="353">353</option>
+    <option value="T8">T8</option>
+    <option value="Agronomia">Agronomia</option>
+    <option value="Barra">Barra</option>
+    <option value="Trem">Trem</option>
+</select>
+
+<label for="tipoPassagem">Selecione o tipo de passagem:</label>
+<select id="tipoPassagem">
+    <option value="inteira">Tipo de passagem</option>
+    <option value="inteira">Passagem Inteira</option>
+    <option value="meia">Meia Passagem</option>
+</select>
+
+<input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
+<input type="text" id="credito" placeholder="Crédito">
+<input type="text" id="data" placeholder="Data" readonly>
+<input type="text" id="hora_registro" placeholder="Hora Registro" readonly>
+
+<button onclick="calcularValor()">Calcular Valor da Passagem</button>
+<br>
+<br>
+<button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
+<br>
+<br>
+<button onclick="registrarDataEHora()">Registrar Data e Hora</button>
+
+<!-- Botão para voltar para a Home -->
+<button onclick="voltarParaHome()" style="margin-top: 20px;">Voltar para Home</button>
+
+<script>
+    const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/zuae2g1vhosmm';
+
+    function calcularValor() {
+        const transporte = document.getElementById('transporte').value;
+        const tipoPassagem = document.getElementById('tipoPassagem').value;
+
+        let valor;
+
+        if (['343', '353', 'T8', 'Agronomia', 'Barra'].includes(transporte)) {
+            valor = tipoPassagem === 'inteira' ? 'R$ 4,80' : 'R$ 2,40';
+        } else if (transporte === 'Trem') {
+            valor = tipoPassagem === 'inteira' ? 'R$ 4,50' : 'R$ 3,87';
+        }
+
+        document.getElementById('valorPassagem').value = valor;
+    }
+
+    async function enviarParaPlanilha() {
+        const transporte = document.getElementById('transporte').value;
+        const tipoPassagem = document.getElementById('tipoPassagem').value;
+        const valorPassagem = document.getElementById('valorPassagem').value;
+        const credito = document.getElementById('credito').value;
+        const data = document.getElementById('data').value;
+        const hora_registro = document.getElementById('hora_registro').value;
+
+        const registro = {
+            "Transporte": transporte,
+            "TipoPassagem": tipoPassagem,
+            "ValorPassagem": valorPassagem,
+            "Crédito": credito,
+            "Data": data,
+            "HoraRegistro": hora_registro
+        };
+
+        try {
+            const response = await fetch(SHEETDB_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(registro)
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(`Erro ${response.status}: ${errorMessage}`);
+            }
+
+            alert("Dados enviados com sucesso para a planilha!");
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error.message);
+            alert(`Ocorreu um erro ao enviar os dados para a planilha: ${error.message}`);
+        }
+    }
+
+    function registrarDataEHora() {
+        const dataAtual = new Date().toISOString().split('T')[0];
+        const horaAtual = new Date().toLocaleTimeString();
+
+        document.getElementById('data').value = dataAtual;
+        document.getElementById('hora_registro').value = horaAtual;
+    }
+
+    function voltarParaHome() {
+        window.location.href = 'index.html'; // Redireciona para a página inicial (supondo que o nome do arquivo seja "index.html")
+    }
+</script>
+
+</body>
+</html>
