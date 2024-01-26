@@ -1,30 +1,35 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     padding: 20px;
-    background-color: black;  /* Cor de fundo alterada para preto */
-    color: white;  /* Texto alterado para branco para melhor contraste */
-    max-width: 600px;
+    background-color: #1c1c1c;  /* Cor de fundo alterada para cinza escuro */
+    color: #fff;  /* Texto alterado para branco para melhor contraste */
+    max-width: 800px;
     margin: 0 auto;
 }
 
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #007bff;  /* Cor azul para o cabeçalho */
 }
 
-h1 {
-    text-align: center; /* Centraliza o texto */
-    margin-top: 50px;   /* Espaçamento superior para separar do topo */
+form {
+    margin-top: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #fff;  /* Cor do texto do label */
 }
 
-select,
-input[type="text"] {
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -32,14 +37,14 @@ input[type="text"] {
     border-radius: 5px;
     font-size: 16px;
     background-color: #333;  /* Cor de fundo mais escura para contraste */
-    color: white;  /* Texto alterado para branco */
+    color: #fff;  /* Texto alterado para branco */
 }
 
 button {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -56,28 +61,20 @@ button:hover {
         max-width: 100%;
     }
 
-    select,
     input[type="text"],
-    input[type="number"],
-    input[type="email"],
     input[type="tel"],
+    input[type="email"],
+    input[type="number"],
     textarea,
+    select,
     button {
         width: 100%;
         padding: 10px;
         margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
         font-size: 14px; /* Tamanho da fonte ajustado para melhor visibilidade em telas menores */
-        background-color: #333;
-        color: white;
     }
 
     textarea {
         height: 100px;
-    }
-
-    button:hover {
-        background-color: #0056b3;
     }
 }
