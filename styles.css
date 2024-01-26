@@ -33,7 +33,7 @@ select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: none;  /* Removendo a borda para um visual mais limpo */
     border-radius: 5px;
     font-size: 16px;
     background-color: #333;  /* Cor de fundo mais escura para contraste */
@@ -69,12 +69,12 @@ button:hover {
     select,
     button {
         width: 100%;
-        padding: 8px;  /* Reduzindo um pouco o padding para economizar espaço */
-        margin-bottom: 10px;  /* Reduzindo a margem inferior para economizar espaço */
-        font-size: 14px; /* Tamanho da fonte ajustado para melhor visibilidade em telas menores */
+        padding: 8px;
+        margin-bottom: 10px;
+        font-size: 14px;
     }
 
     textarea {
-        height: 80px;  /* Reduzindo um pouco a altura da textarea */
+        height: 80px;
     }
 }
