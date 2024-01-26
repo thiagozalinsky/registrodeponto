@@ -69,12 +69,12 @@ button:hover {
     select,
     button {
         width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
+        padding: 8px;  /* Reduzindo um pouco o padding para economizar espaço */
+        margin-bottom: 10px;  /* Reduzindo a margem inferior para economizar espaço */
         font-size: 14px; /* Tamanho da fonte ajustado para melhor visibilidade em telas menores */
     }
 
     textarea {
-        height: 100px;
+        height: 80px;  /* Reduzindo um pouco a altura da textarea */
     }
 }
