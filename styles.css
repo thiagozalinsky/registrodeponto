@@ -16,13 +16,14 @@ h1 {
     text-align: center; /* Centraliza o texto */
     margin-top: 50px;   /* Espaçamento superior para separar do topo */
 }
+
 label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
 }
 
-select, 
+select,
 input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -49,16 +50,34 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Responsividade para telas com largura máxima de 600px */
 @media (max-width: 600px) {
     body {
         padding: 10px;
-        max-width: 100%;  /* Tornando o corpo responsivo à largura da tela */
+        max-width: 100%;
     }
 
-    select, 
+    select,
     input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
     button {
-        font-size: 14px;  /* Reduzindo o tamanho da fonte para melhor visualização em telas menores */
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px; /* Tamanho da fonte ajustado para melhor visibilidade em telas menores */
+        background-color: #333;
+        color: white;
+    }
+
+    textarea {
+        height: 100px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
     }
 }
