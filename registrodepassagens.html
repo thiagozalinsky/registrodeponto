@@ -19,7 +19,7 @@
     <option value="353">353</option>
     <option value="T8">T8</option>
     <option value="Agronomia">Agronomia</option>
-    <option value="Barra">704</option>
+    <option value="704">704</option>
     <option value="Trem">Trem</option>
 </select>
 
@@ -55,7 +55,7 @@
 
         let valor;
 
-        if (['343', '353', 'T8', 'Agronomia', 'Barra'].includes(transporte)) {
+        if (['343', '353', 'T8', 'Agronomia', '704'].includes(transporte)) {
             valor = tipoPassagem === 'inteira' ? 'R$ 4,80' : 'R$ 2,40';
         } else if (transporte === 'Trem') {
             valor = tipoPassagem === 'inteira' ? 'R$ 4,50' : 'R$ 3,87';
