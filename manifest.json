@@ -7,7 +7,7 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "icons/icon-192x192.png",
+      "src": "install_mobile",
       "type": "image/png",
       "sizes": "192x192"
     }
