@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Gastos de Gasolina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"], input[type="number"], input[type="submit"] {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <form id="gasForm">
+    <input type="text" id="date" placeholder="Data">
+    <input type="number" id="kilometers" placeholder="Quilometragem">
+    <input type="number" id="liters" placeholder="Litros">
+    <input type="submit" value="Registrar">
+  </form>
+
+  <script>
+    document.getElementById('gasForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var date = document.getElementById('date').value;
+      var kilometers = document.getElementById('kilometers').value;
+      var liters = document.getElementById('liters').value;
+
+      // Construa o objeto com os dados a serem enviados
+      var dataToSend = {
+        date: date,
+        kilometers: kilometers,
+        liters: liters
+      };
+
+      // Faça a requisição POST para a API do Sheet Best
+      fetch('https://sheet.best/api/sheets/sua_chave_da_api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Sucesso:', data);
+        alert('Registro enviado com sucesso!');
+        // Limpe os campos após o envio bem-sucedido
+        document.getElementById('date').value = '';
+        document.getElementById('kilometers').value = '';
+        document.getElementById('liters').value = '';
+      })
+      .catch((error) => {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao enviar o registro.');
+      });
+    });
+  </script>
+</body>
+</html>
