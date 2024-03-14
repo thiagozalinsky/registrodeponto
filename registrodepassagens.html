@@ -27,6 +27,7 @@
     </select>
     <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
     <input type="text" id="credito" placeholder="Crédito">
+    <button onclick="definirCreditoZero()">Zerar Crédito</button>
     <input type="text" id="data" placeholder="Data" readonly>
     <input type="text" id="hora_registro" placeholder="Hora Registro" readonly>
     <button onclick="calcularValor()">Calcular Valor da Passagem</button>
@@ -97,9 +98,12 @@
         function voltarParaHome() {
             window.location.href = 'index.html'; // Redireciona para a página inicial (supondo que o nome do arquivo seja "index.html")
         }
+        function definirCreditoZero() {
+            document.getElementById('credito').value = '0';
+        }
     </script>
     
-        <script>
+    <script>
         function getDataFromSheet() {
             const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/lhyvip2w5bka4';
 
@@ -120,7 +124,8 @@
                     alert('Erro ao obter os dados da planilha. Por favor, tente novamente.');
                 });
         }
-        </script>
+    </script>
+
     <script>
         (function(d, s, id) {
             if (d.getElementById(id)) {
