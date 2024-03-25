@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Passagens</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <h2>Registro de Passagens</h2>
+    <label for="transporte">Selecione o transporte:</label>
+    <select id="transporte">
+        <option value="linha">Selecione uma linha</option>
+        <option value="343">343</option>
+        <option value="353">353</option>
+        <option value="T8">T8</option>
+        <option value="Agronomia">Agronomia</option>
+        <option value="704">704</option>
+        <option value="Trem">Trem</option>
+    </select>
+    <label for="tipoPassagem">Selecione o tipo de passagem:</label>
+    <select id="tipoPassagem">
+        <option value="inteira">Tipo de passagem</option>
+        <option value="inteira">Passagem Inteira</option>
+        <option value="meia">Meia Passagem</option>
+    </select>
+    <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
+    <button onclick="calcularValor()">Calcular passagem</button>
+    <input type="text" id="credito" placeholder="Crédito">
+    <button onclick="definirCreditoZero()">Zerar Crédito</button>
+    <input type="text" id="data" placeholder="Data" readonly>
+    <button onclick="registrarDataEHora()">Registrar hora e data</button>
+    <input type="text" id="hora_registro" placeholder="Hora Registro" readonly>
+   <!-- <button onclick="calcularValor()">Calcular Valor da Passagem</button> !-->
+    <br><br>
+    <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
+    <br><br>
+  <!--  <button onclick="registrarDataEHora()">Registrar Data e Hora</button> -->
+    <button onclick="voltarParaHome()" style="margin-top: 20px;">Voltar para Home</button>
+
+    <button onclick="getDataFromSheet()">Obter Dados da Planilha</button>
+
+    <script>
+        const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/lhyvip2w5bka4';
+        function calcularValor() {
+            const transporte = document.getElementById('transporte').value;
+            const tipoPassagem = document.getElementById('tipoPassagem').value;
+            let valor;
+            if (['343', '353', 'T8', 'Agronomia', '704'].includes(transporte)) {
+                valor = tipoPassagem === 'inteira' ? 'R$ 4,80' : 'R$ 2,40';
+            } else if (transporte === 'Trem') {
+                valor = tipoPassagem === 'inteira' ? 'R$ 4,50' : 'R$ 3,87';
+            }
+            document.getElementById('valorPassagem').value = valor;
+        }
+        async function enviarParaPlanilha() {
+            const transporte = document.getElementById('transporte').value;
+            const tipoPassagem = document.getElementById('tipoPassagem').value;
+            const valorPassagem = document.getElementById('valorPassagem').value;
+            const credito = document.getElementById('credito').value.trim();
+            const data = document.getElementById('data').value;
+            const hora_registro = document.getElementById('hora_registro').value;
+            if (credito === '') {
+                alert("Por favor, insira um valor de crédito válido.");
+                return;
+            }
+            const registro = {
+                "Transporte": transporte,
+                "TipoPassagem": tipoPassagem,
+                "ValorPassagem": valorPassagem,
+                "Credito": credito,
+                "Data": data,
+                "HoraRegistro": hora_registro
+            };
+            try {
+                const response = await fetch(SHEETDB_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registro)
+                });
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(`Erro ${response.status}: ${errorMessage}`);
+                }
+                alert("Dados enviados com sucesso para a planilha!");
+            } catch (error) {
+                console.error("Erro ao enviar dados:", error.message);
+                alert(`Ocorreu um erro ao enviar os dados para a planilha: ${error.message}`);
+            }
+        }
+        function registrarDataEHora() {
+            const dataAtual = new Date().toISOString().split('T')[0];
+            const horaAtual = new Date().toLocaleTimeString();
+            document.getElementById('data').value = dataAtual;
+            document.getElementById('hora_registro').value = horaAtual;
+        }
+        function voltarParaHome() {
+            window.location.href = 'index.html'; // Redireciona para a página inicial (supondo que o nome do arquivo seja "index.html")
+        }
+        function definirCreditoZero() {
+            document.getElementById('credito').value = '0';
+        }
+    </script>
+    
+    <script>
+        function getDataFromSheet() {
+            const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/lhyvip2w5bka4';
+
+            fetch(SHEETDB_API_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao obter os dados da planilha');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Dados da planilha:', data);
+                    // Aqui você pode processar os dados conforme necessário
+                    // Por exemplo, exibindo-os em uma tabela HTML ou em gráficos
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao obter os dados da planilha. Por favor, tente novamente.');
+                });
+        }
+    </script>
+
+    <script>
+        (function(d, s, id) {
+            if (d.getElementById(id)) {
+                if (window.__TOMORROW__) {
+                    window.__TOMORROW__.renderWidget();
+                }
+                return;
+            }
+            const fjs = d.getElementsByTagName(s)[0];
+            const js = d.createElement(s);
+            js.id = id;
+            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'tomorrow-sdk');
+    </script>
+    <div class="tomorrow"
+       data-location-id="015551,015551"
+       data-language="PT"
+       data-unit-system="METRIC"
+       data-skin="dark"
+       data-widget-type="aqi6"
+       style="padding-bottom:22px;position:relative;"
+    >
+      <a
+        href="https://www.tomorrow.io/weather-api/"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+      >
+        <img
+          alt="Powered by the Tomorrow.io Weather API"
+          src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+          width="250"
+          height="18"
+        />
+      </a>
+    </div>
+</body>
+</html>
