@@ -85,7 +85,7 @@
                     const errorMessage = await response.text();
                     throw new Error(`Erro ${response.status}: ${errorMessage}`);
                 }
-                alert("Dados enviados com sucesso para a planilha!");
+                alert("O valor de Trem enviado foi de R$3,57");
             } catch (error) {
                 console.error("Erro ao enviar dados:", error.message);
                 alert(`Ocorreu um erro ao enviar os dados para a planilha: ${error.message}`);
