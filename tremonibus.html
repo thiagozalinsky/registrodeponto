@@ -8,7 +8,7 @@
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <h2>Registro de Passagens</h2>
+    <h2>Trem >> Ônibus </h2>
     <label for="transporte">Selecione o transporte:</label>
     <select id="transporte">
         <option value="linha">Selecione uma linha</option>
@@ -85,7 +85,7 @@
                     const errorMessage = await response.text();
                     throw new Error(`Erro ${response.status}: ${errorMessage}`);
                 }
-                alert("Dados enviados com sucesso para a planilha!");
+                alert("Valor da passagem do trem enviado foi R$ 3,87" );
             } catch (error) {
                 console.error("Erro ao enviar dados:", error.message);
                 alert(`Ocorreu um erro ao enviar os dados para a planilha: ${error.message}`);
