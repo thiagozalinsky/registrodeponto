@@ -45,19 +45,11 @@
         }
 
         async function enviarParaPlanilha() {
-            let valorPassagem = '';
-            switch (origemSelecionada) {
-                case 'centro':
-                    valorPassagem = destinoSelecionado === 'farrapos' ? 'R$ 4.80' : 'R$ 3.87';
-                    break;
-                case 'farrapos':
-                    valorPassagem = destinoSelecionado === 'centro' ? 'R$ 3.57' : 'R$ 4.50';
-                    break;
-                default:
-                    alert('Por favor, selecione uma origem e um destino.');
-                    return;
+            const valorPassagem = document.getElementById('valorPassagem').value;
+            if (valorPassagem === '') {
+                alert('Por favor, selecione uma origem e um destino.');
+                return;
             }
-            document.getElementById('valorPassagem').value = valorPassagem;
 
             const transporte = "Trem"; // Como não temos uma seleção para o transporte, assumimos que seja "Trem"
             const tipoPassagem = "inteira"; // Como não temos uma seleção para o tipo de passagem, assumimos que seja "inteira"
