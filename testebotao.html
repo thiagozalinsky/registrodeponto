@@ -16,8 +16,8 @@
     </div>
     <label for="destino">Destino:</label>
     <div>
-        <button onclick="setValor('farrapos', 4.50)">Farrapos << Centro </button>
-        <button onclick="setValor('centro', 3.87)">Centro << Bairro</button>
+        <button onclick="setDestino('farrapos')">Farrapos << Centro </button>
+        <button onclick="setDestino('centro')">Centro << Bairro</button>
     </div>
     <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
     <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
@@ -38,6 +38,10 @@
         function setValor(origem, valor) {
             origemSelecionada = origem;
             document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
+        }
+
+        function setDestino(destino) {
+            destinoSelecionado = destino;
         }
 
         async function enviarParaPlanilha() {
