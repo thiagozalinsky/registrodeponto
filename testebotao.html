@@ -11,13 +11,13 @@
     <h2>Ônibus >> Trem</h2>
     <label for="origem">Origem:</label>
     <div>
-        <button onclick="setValor('centro', 4.80)">Centro</button>
-        <button onclick="setValor('farrapos', 3.57)">Farrapos</button>
+        <button onclick="setValor('centro', 4.80)">Bairro >> Centro</button>
+        <button onclick="setValor('farrapos', 3.57)">Centro >> Farrapos</button>
     </div>
     <label for="destino">Destino:</label>
     <div>
-        <button onclick="setValor('farrapos', 4.50)">Farrapos</button>
-        <button onclick="setValor('centro', 3.87)">Centro Bairro</button>
+        <button onclick="setValor('farrapos', 4.50)">Farrapos << Centro </button>
+        <button onclick="setValor('centro', 3.87)">Centro << Bairro</button>
     </div>
     <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
     <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
