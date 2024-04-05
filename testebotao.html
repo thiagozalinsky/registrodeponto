@@ -42,6 +42,8 @@
 
         function setDestino(destino) {
             destinoSelecionado = destino;
+            const valorPassagem = destino.includes('Farrapos') ? 3.57 : 4.80; // Define o valor da passagem baseado no destino
+            document.getElementById('valorPassagem').value = `R$ ${valorPassagem.toFixed(2)}`;
         }
 
         async function enviarParaPlanilha() {
