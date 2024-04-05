@@ -37,6 +37,7 @@
 
         function setValor(origem, valor) {
             origemSelecionada = origem;
+            destinoSelecionado = ''; // Limpa o destino selecionado
             document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
         }
 
@@ -48,6 +49,11 @@
             const valorPassagem = document.getElementById('valorPassagem').value;
             if (valorPassagem === '') {
                 alert('Por favor, selecione uma origem e um destino.');
+                return;
+            }
+
+            if (destinoSelecionado === '') {
+                alert('Por favor, selecione um destino.');
                 return;
             }
 
@@ -64,6 +70,7 @@
                 "Transporte": transporte,
                 "TipoPassagem": tipoPassagem,
                 "ValorPassagem": valorPassagem,
+                "Destino": destinoSelecionado, // Adiciona o destino selecionado ao registro
                 "Crédito": credito,
                 "Data": data,
                 "HoraRegistro": hora_registro
