@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Farrapos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <h2>Ônibus >> Trem</h2>
+    <label for="origem">Origem:</label>
+    <div>
+        <button onclick="setDestino('Bairro >> Centro', 4.80)">Bairro >> Centro</button>
+        <button onclick="setDestino('Centro >> Farrapos', 3.57)">Centro >> Farrapos</button>
+    </div>
+    <label for="destino">Destino:</label>
+    <div>
+        <button onclick="setDestino('Farrapos << Centro', 4.50)">Farrapos << Centro</button>
+        <button onclick="setDestino('Centro << Bairro', 3.87)">Centro << Bairro</button>
+    </div>
+    <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
+    <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
+    <input type="text" id="credito" placeholder="Crédito">
+    <button onclick="definirCreditoZero()">Zerar Crédito</button>
+    <input type="text" id="data" placeholder="Data" readonly>
+    <button onclick="registrarDataEHora()">Registrar hora e data</button>
+    <input type="text" id="hora_registro" placeholder="Hora Registro" readonly>
+    <br><br>
+    <button onclick="voltarParaHome()" style="margin-top: 20px;">Voltar para Home</button>
+    <button onclick="getDataFromSheet()">Obter Dados da Planilha</button>
+
+    <script>
+        const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/lhyvip2w5bka4';
+        let origemSelecionada = '';
+        let destinoSelecionado = '';
+        let valorPassagemSelecionado = 0;
+
+        function setValor(origem, valor) {
+            origemSelecionada = origem;
+            valorPassagemSelecionado = valor;
+            document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
+        }
+
+        function setDestino(destino, valor) {
+            destinoSelecionado = destino;
+            valorPassagemSelecionado = valor;
+            document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
+        }
+
+        async function enviarParaPlanilha() {
+            const valorPassagem = valorPassagemSelecionado;
+            if (valorPassagem === 0) {
+                alert('Por favor, selecione uma origem e um destino.');
+                return;
+            }
+
+            if (destinoSelecionado === '') {
+                alert('Por favor, selecione um destino.');
+                return;
+            }
+
+            const transporte = "Trem"; 
+            const tipoPassagem = "inteira"; 
+            const credito = document.getElementById('credito').value.trim();
+            const data = document.getElementById('data').value;
+            const hora_registro = document.getElementById('hora_registro').value;
+            if (credito === '') {
+                alert("Por favor, insira um valor de crédito válido.");
+                return;
+            }
+            const registro = {
+                "Transporte": transporte,
+                "TipoPassagem": tipoPassagem,
+                "ValorPassagem": valorPassagem,
+                "Destino": destinoSelecionado, 
+                "Crédito": credito,
+                "Data": data,
+                "HoraRegistro": hora_registro
+            };
+            try {
+                const response = await fetch(SHEETDB_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registro)
+                });
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(`Erro ${response.status}: ${errorMessage}`);
+                }
+                alert(`O valor de Trem enviado foi de ${valorPassagem}`);
+            } catch (error) {
+                console.error("Erro ao enviar dados:", error.message);
+                alert(`Ocorreu um erro ao enviar os dados para a planilha: ${error.message}`);
+            }
+        }
+
+        function registrarDataEHora() {
+            const dataAtual = new Date().toISOString().split('T')[0];
+            const horaAtual = new Date().toLocaleTimeString();
+            document.getElementById('data').value = dataAtual;
+            document.getElementById('hora_registro').value = horaAtual;
+        }
+
+        function voltarParaHome() {
+            window.location.href = 'index.html'; 
+        }
+
+        function definirCreditoZero() {
+            document.getElementById('credito').value = '0';
+        }
+
+        function getDataFromSheet() {
+            fetch(SHEETDB_API_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao obter os dados da planilha');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Dados da planilha:', data);
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao obter os dados da planilha. Por favor, tente novamente.');
+                });
+        }
+    </script>
+
+    <script>
+        (function(d, s, id) {
+            if (d.getElementById(id)) {
+                if (window.__TOMORROW__) {
+                    window.__TOMORROW__.renderWidget();
+                }
+                return;
+            }
+            const fjs = d.getElementsByTagName(s)[0];
+            const js = d.createElement(s);
+            js.id = id;
+            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'tomorrow-sdk');
+    </script>
+    <div class="tomorrow"
+       data-location-id="015551,015551"
+       data-language="PT"
+       data-unit-system="METRIC"
+       data-skin="dark"
+       data-widget-type="aqi6"
+       style="padding-bottom:22px;position:relative;"
+    >
+      <a
+        href="https://www.tomorrow.io/weather-api/"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+      >
+        <img
+          alt="Powered by the Tomorrow.io Weather API"
+          src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+          width="250"
+          height="18"
+        />
+      </a>
+    </div>
+</body>
+        </html>
+            
