@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina teste</title>
+    <title>Ida</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="/manifest.json">
 </head>
@@ -11,14 +11,14 @@
     <h2>Ônibus >> Trem</h2>
     <label for="origem">Origem:</label>
     <div>
-        <button onclick="setValor('Bairro >> Centro', 4.80)">Bairro >> Centro</button>
-        <button onclick="setValor('Centro >> Farrapos', 3.57)">Centro >> Farrapos</button>
+        <button onclick="setDestino('Bairro >> Centro', 4.80)">Bairro >> Centro</button>
+        <button onclick="setDestino('Centro >> Farrapos', 3.57)">Centro >> Farrapos</button>
     </div>
     <label for="destino">Destino:</label>
-    <div>
+   <!-- <div>
         <button onclick="setDestino('Farrapos << Centro', 4.50)">Farrapos << Centro</button>
         <button onclick="setDestino('Centro << Bairro', 3.87)">Centro << Bairro</button>
-    </div>
+    </div> -->
     <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
     <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
     <input type="text" id="credito" placeholder="Crédito">
