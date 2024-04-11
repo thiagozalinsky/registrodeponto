@@ -19,13 +19,17 @@
         <button onclick="setDestino('Farrapos << Centro', 4.50)">Farrapos << Centro</button>
         <button onclick="setDestino('Centro << Bairro', 3.87)">Centro << Bairro</button>
     </div> -->
-    <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
-    <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
+    
     <input type="text" id="credito" placeholder="Crédito">
     <button onclick="definirCreditoZero()">Zerar Crédito</button>
+    
     <input type="text" id="data" placeholder="Data" readonly>
     <button onclick="registrarDataEHora()">Registrar hora e data</button>
+    
     <input type="text" id="hora_registro" placeholder="Hora Registro" readonly>
+    
+    <input type="text" id="valorPassagem" placeholder="Valor da passagem" readonly>
+    <button onclick="enviarParaPlanilha()">Enviar para Planilha</button>
     <br><br>
     <button onclick="voltarParaHome()" style="margin-top: 20px;">Voltar para Home</button>
     <button onclick="getDataFromSheet()">Obter Dados da Planilha</button>
