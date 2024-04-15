@@ -11,14 +11,14 @@
     <h2>IDA</h2>
     <label for="origem">Origem:</label>
     <div>
-        <button onclick="setValor('Bairro >> Centro', 4.80)">Bairro >> Centro</button>
-        <button onclick="setValor('Centro >> Farrapos', 3.57)">Centro >> Farrapos</button>
+        <button onclick="setValor('Bairro >> Centro', 'origem', 4.80)">Bairro >> Centro</button>
+        <button onclick="setValor('Centro >> Farrapos', 'origem', 3.57)">Centro >> Farrapos</button>
     </div>
     <label for="destino">Destino:</label>
-   <!-- <div>
-        <button onclick="setDestino('Farrapos << Centro', 4.50)">Farrapos << Centro</button>
-        <button onclick="setDestino('Centro << Bairro', 3.87)">Centro << Bairro</button>
-    </div> -->
+    <div>
+        <button onclick="setValor('Farrapos << Centro', 'destino', 4.50)">Farrapos << Centro</button>
+        <button onclick="setValor('Centro << Bairro', 'destino', 3.87)">Centro << Bairro</button>
+    </div>
     
     <input type="text" id="credito" placeholder="Crédito">
     <button onclick="definirCreditoZero()">Zerar Crédito</button>
@@ -40,14 +40,12 @@
         let destinoSelecionado = '';
         let valorPassagemSelecionado = 0;
 
-        function setValor(origem, valor) {
-            origemSelecionada = origem;
-            valorPassagemSelecionado = valor;
-            document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
-        }
-
-        function setDestino(destino, valor) {
-            destinoSelecionado = destino;
+        function setValor(valor, destino, valor) {
+            if (destino === 'origem') {
+                origemSelecionada = valor;
+            } else if (destino === 'destino') {
+                destinoSelecionado = valor;
+            }
             valorPassagemSelecionado = valor;
             document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
         }
@@ -172,5 +170,4 @@
       </a>
     </div>
 </body>
-        </html>
-            
+</html>
