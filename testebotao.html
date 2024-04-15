@@ -13,11 +13,13 @@
     <div>
         <button onclick="setValor('Bairro >> Centro', 'origem', 4.80)">Bairro >> Centro</button>
         <button onclick="setValor('Centro >> Farrapos', 'origem', 3.57)">Centro >> Farrapos</button>
+
     </div>
     <label for="destino">Destino:</label>
     <div>
         <button onclick="setValor('Farrapos << Centro', 'destino', 4.50)">Farrapos << Centro</button>
         <button onclick="setValor('Centro << Bairro', 'destino', 3.87)">Centro << Bairro</button>
+
     </div>
     
     <input type="text" id="credito" placeholder="Crédito">
@@ -41,14 +43,15 @@
         let valorPassagemSelecionado = 0;
 
         function setValor(valor, destino, valor) {
-            if (destino === 'origem') {
-                origemSelecionada = valor;
-            } else if (destino === 'destino') {
-                destinoSelecionado = valor;
-            }
-            valorPassagemSelecionado = valor;
-            document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
-        }
+    if (destino === 'origem') {
+        origemSelecionada = valor;
+    } else if (destino === 'destino') {
+        destinoSelecionado = valor;
+    }
+    valorPassagemSelecionado = valor;
+    document.getElementById('valorPassagem').value = `R$ ${valor.toFixed(2)}`;
+}
+
 
         async function enviarParaPlanilha() {
             const valorPassagem = valorPassagemSelecionado;
